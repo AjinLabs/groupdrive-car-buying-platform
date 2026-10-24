@@ -21,7 +21,11 @@ import {
   LayoutDashboard
 } from 'lucide-react';
 
+import { useRouter, usePathname } from 'next/navigation';
+
 export function Header() {
+  const router = useRouter();
+  const pathname = usePathname();
   const { 
     language, 
     setLanguage, 
@@ -35,6 +39,15 @@ export function Header() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
+
+  const navigateTo = (tab: any, path: string) => {
+    setActiveTab(tab);
+    router.push(path);
+  };
+
+  const isCurrentTab = (tab: string, path: string) => {
+    return pathname === path || (pathname === '/' && activeTab === tab);
+  };
 
   const rolesList: { role: Role; label: string; desc: string; icon: any }[] = [
     { role: 'BUYER', label: t.roles.buyer, desc: 'Verified Car Buyer in Kochi', icon: UserCheck },
@@ -51,7 +64,7 @@ export function Header() {
         <div className="flex items-center justify-between h-20">
           
           {/* Brand Logo & Tagline */}
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveTab('home')}>
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigateTo('home', '/')}>
             <div className="w-10 h-10 rounded-xl bg-slate-900 flex items-center justify-center text-white font-extrabold tracking-tighter text-lg shadow-md border border-slate-700">
               <span className="text-blue-500 mr-0.5">G</span>D
             </div>
@@ -73,9 +86,9 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
             <button
-              onClick={() => setActiveTab('cars')}
+              onClick={() => navigateTo('cars', '/cars')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                activeTab === 'cars' ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isCurrentTab('cars', '/cars') ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
               }`}
             >
               <Car className="w-4 h-4" />
@@ -83,9 +96,9 @@ export function Header() {
             </button>
 
             <button
-              onClick={() => setActiveTab('groups')}
+              onClick={() => navigateTo('groups', '/groups')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                activeTab === 'groups' ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isCurrentTab('groups', '/groups') ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
               }`}
             >
               <Users className="w-4 h-4" />
@@ -94,9 +107,9 @@ export function Header() {
             </button>
 
             <button
-              onClick={() => setActiveTab('quotes')}
+              onClick={() => navigateTo('quotes', '/quotes')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                activeTab === 'quotes' ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isCurrentTab('quotes', '/quotes') ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
               }`}
             >
               <FileText className="w-4 h-4" />
@@ -104,9 +117,9 @@ export function Header() {
             </button>
 
             <button
-              onClick={() => setActiveTab('calculator')}
+              onClick={() => navigateTo('calculator', '/calculator')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                activeTab === 'calculator' ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isCurrentTab('calculator', '/calculator') ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
               }`}
             >
               <Calculator className="w-4 h-4" />
@@ -114,9 +127,9 @@ export function Header() {
             </button>
 
             <button
-              onClick={() => setActiveTab('heatmap')}
+              onClick={() => navigateTo('heatmap', '/heatmap')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                activeTab === 'heatmap' ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isCurrentTab('heatmap', '/heatmap') ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
               }`}
             >
               <Flame className="w-4 h-4 text-orange-500" />
@@ -124,9 +137,9 @@ export function Header() {
             </button>
 
             <button
-              onClick={() => setActiveTab('dashboard')}
+              onClick={() => navigateTo('dashboard', '/dashboard')}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${
-                activeTab === 'dashboard' ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
+                isCurrentTab('dashboard', '/dashboard') ? 'text-blue-600 bg-blue-50/70 font-semibold' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/60'
               }`}
             >
               <LayoutDashboard className="w-4 h-4" />
@@ -239,42 +252,42 @@ export function Header() {
       {mobileMenuOpen && (
         <div className="lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-2">
           <button
-            onClick={() => { setActiveTab('cars'); setMobileMenuOpen(false); }}
+            onClick={() => { navigateTo('cars', '/cars'); setMobileMenuOpen(false); }}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
           >
             <Car className="w-4 h-4 text-blue-600" />
             {t.nav.exploreCars}
           </button>
           <button
-            onClick={() => { setActiveTab('groups'); setMobileMenuOpen(false); }}
+            onClick={() => { navigateTo('groups', '/groups'); setMobileMenuOpen(false); }}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
           >
             <Users className="w-4 h-4 text-blue-600" />
             {t.nav.buyerGroups}
           </button>
           <button
-            onClick={() => { setActiveTab('quotes'); setMobileMenuOpen(false); }}
+            onClick={() => { navigateTo('quotes', '/quotes'); setMobileMenuOpen(false); }}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
           >
             <FileText className="w-4 h-4 text-blue-600" />
             Quotation Arena
           </button>
           <button
-            onClick={() => { setActiveTab('calculator'); setMobileMenuOpen(false); }}
+            onClick={() => { navigateTo('calculator', '/calculator'); setMobileMenuOpen(false); }}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
           >
             <Calculator className="w-4 h-4 text-blue-600" />
             {t.nav.calculator}
           </button>
           <button
-            onClick={() => { setActiveTab('heatmap'); setMobileMenuOpen(false); }}
+            onClick={() => { navigateTo('heatmap', '/heatmap'); setMobileMenuOpen(false); }}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
           >
             <Flame className="w-4 h-4 text-orange-500" />
             {t.nav.heatmap}
           </button>
           <button
-            onClick={() => { setActiveTab('dashboard'); setMobileMenuOpen(false); }}
+            onClick={() => { navigateTo('dashboard', '/dashboard'); setMobileMenuOpen(false); }}
             className="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-slate-700 hover:bg-slate-50 flex items-center gap-2"
           >
             <LayoutDashboard className="w-4 h-4 text-slate-700" />
