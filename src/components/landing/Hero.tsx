@@ -186,7 +186,7 @@ export function Hero() {
               {/* Pristine Vehicle Image */}
               <div className="relative my-4 aspect-[16/10] overflow-hidden rounded-2xl bg-slate-800/40 border border-slate-700/50 flex items-center justify-center group">
                 <img
-                  src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&w=1200&auto=format&fit=crop"
+                  src="/images/cars/creta.png"
                   alt="Hyundai Creta"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
